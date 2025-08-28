@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Base folder
-BASE_DIR="~/your/own/directory/path"
+BASE_DIR="/your/own/directory/path"
 
 cd "$BASE_DIR" || exit
 
@@ -27,8 +27,11 @@ for dir in [0-9][0-9]*/; do
     for file in *.jpg; do
         [[ ! -f "$file" ]] && continue
 
-        # Extract only the numeric product number before first underscore
-        product_num=$(echo "$file" | sed -E 's/^[0-9]+-([0-9]+)_.*/\1/')
+        # Remove extension
+        name="${file%.jpg}"
+
+        # Take everything before first underscore
+        product_num="${name%%_*}"
 
         # Make subdirectory for product number
         mkdir -p "$product_num"
