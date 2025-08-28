@@ -11,6 +11,16 @@ for dir in [0-9][0-9]*/; do
 
     echo "Processing $dir ..."
 
+    # Check if this folder has any .jpg files directly inside it
+    shopt -s nullglob
+    jpgs=("$dir"*.jpg)
+    shopt -u nullglob
+
+    if [[ ${#jpgs[@]} -eq 0 ]]; then
+        echo "Only folders, skipping"
+        continue
+    fi
+
     cd "$dir" || continue
 
     # Loop over all jpg files in this folder
